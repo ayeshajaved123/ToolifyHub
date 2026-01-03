@@ -7,6 +7,8 @@ ToolifyHub is a web-based multi-tool platform developed using HTML, CSS, and Jav
 - Unit Converter
 - Word Counter
 - QR Code Generator
+- Plagirism Checker
+- File Converter
 
 ## Technologies Used
 - HTML5
