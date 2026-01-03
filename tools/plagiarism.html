@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Plagiarism Checker | ToolifyHub</title>
+
+  <!-- Main site CSS -->
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- Tool CSS -->
+  <link rel="stylesheet" href="plagiarism.css">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">ToolifyHub</div>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">Tools</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="plagiarism-container">
+  <h1>Plagiarism Checker</h1>
+  <p class="subtitle">
+    Check your content against web sources and ensure originality.
+  </p>
+
+  <textarea id="userText" placeholder="Paste your text here (minimum 30 words)..."></textarea>
+
+  <button id="checkBtn">Check Plagiarism</button>
+
+  <div id="resultBox" class="hidden">
+    <h3>Result</h3>
+    <p id="resultText">0% Plagiarized</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 ToolifyHub by Ayesha. All Rights Reserved.</p>
+</footer>
+
+<script src="plagiarism.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Counter | ToolifyHub</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      background: #f3f4f6;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #3b82f6;
+      margin-bottom: 25px;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      padding: 12px;
+      font-size: 1rem;
+      resize: vertical;
+      outline: none;
+    }
+    .stats {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      text-align: center;
+    }
+    .stat-box {
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .stat-box h3 {
+      color: #3b82f6;
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    .stat-box p {
+      font-size: 1.1rem;
+      color: #111827;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Word & Character Counter</h2>
+    <textarea id="textInput" placeholder="Start typing here..."></textarea>
+
+    <div class="stats">
+      <div class="stat-box">
+        <h3>Words</h3>
+        <p id="wordCount">0</p>
+      </div>
+      <div class="stat-box">
+        <h3>Characters</h3>
+        <p id="charCount">0</p>
+      </div>
+      <div class="stat-box">
+        <h3>Sentences</h3>
+        <p id="sentenceCount">0</p>
+      </div>
+      <div class="stat-box">
+        <h3>Paragraphs</h3>
+        <p id="paraCount">0</p>
+      </div>
+      <div class="stat-box">
+        <h3>Reading Time</h3>
+        <p id="readTime">0 min</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const textInput = document.getElementById('textInput');
+
+    textInput.addEventListener('input', () => {
+      const text = textInput.value.trim();
+
+      const words = text.match(/\b\w+\b/g) || [];
+      const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+      const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0);
+      const chars = text.length;
+
+      const wordCount = words.length;
+      const sentenceCount = sentences.length;
+      const paraCount = paragraphs.length;
+      const readTime = (wordCount / 200).toFixed(2); // average 200 words/min
+
+      document.getElementById('wordCount').innerText = wordCount;
+      document.getElementById('charCount').innerText = chars;
+      document.getElementById('sentenceCount').innerText = sentenceCount;
+      document.getElementById('paraCount').innerText = paraCount;
+      document.getElementById('readTime').innerText = readTime + ' min';
+    });
+  </script>
+</body>
+</html>

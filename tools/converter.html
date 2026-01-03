@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unit Converter | ToolifyHub</title>
+
+  <!-- Main site CSS (navbar, fonts) -->
+  <link rel="stylesheet" href="../style.css">
+
+  <!-- Converter specific CSS -->
+  <link rel="stylesheet" href="converter.css">
+</head>
+<body>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">ToolifyHub</div>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">Tools</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="converter-wrapper">
+  <div class="converter-card">
+
+    <h1>Unit Converter</h1>
+    <p class="subtitle">Convert length and temperature instantly</p>
+
+    <!-- Length Converter -->
+    <div class="converter-section">
+      <h3>Length Conversion</h3>
+
+      <div class="row">
+        <input id="lenValue" type="number" placeholder="Enter value">
+        <select id="lenFrom">
+          <option value="m">Meters (m)</option>
+          <option value="km">Kilometers (km)</option>
+          <option value="cm">Centimeters (cm)</option>
+          <option value="mm">Millimeters (mm)</option>
+          <option value="ft">Feet (ft)</option>
+        </select>
+        <select id="lenTo">
+          <option value="m">Meters (m)</option>
+          <option value="km">Kilometers (km)</option>
+          <option value="cm">Centimeters (cm)</option>
+          <option value="mm">Millimeters (mm)</option>
+          <option value="ft">Feet (ft)</option>
+        </select>
+      </div>
+
+      <button onclick="convertLength()">Convert Length</button>
+      <p class="result" id="lenResult"></p>
+    </div>
+
+    <!-- Temperature Converter -->
+    <div class="converter-section">
+      <h3>Temperature Conversion</h3>
+
+      <div class="row">
+        <input id="tempValue" type="number" placeholder="Enter value">
+        <select id="tempFrom">
+          <option value="c">Celsius (°C)</option>
+          <option value="f">Fahrenheit (°F)</option>
+          <option value="k">Kelvin (K)</option>
+        </select>
+        <select id="tempTo">
+          <option value="c">Celsius (°C)</option>
+          <option value="f">Fahrenheit (°F)</option>
+          <option value="k">Kelvin (K)</option>
+        </select>
+      </div>
+
+      <button onclick="convertTemp()">Convert Temperature</button>
+      <p class="result" id="tempResult"></p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function convertLength() {
+    const v = parseFloat(document.getElementById('lenValue').value);
+    if (isNaN(v)) { alert('Enter a number'); return; }
+
+    const from = document.getElementById('lenFrom').value;
+    const to = document.getElementById('lenTo').value;
+
+    const toMeters = { m:1, km:1000, cm:0.01, mm:0.001, ft:0.3048 };
+    const meters = v * toMeters[from];
+    const result = meters / toMeters[to];
+
+    document.getElementById('lenResult').innerText =
+      `${v} ${from} = ${result.toFixed(4)} ${to}`;
+  }
+
+  function convertTemp() {
+    const v = parseFloat(document.getElementById('tempValue').value);
+    if (isNaN(v)) { alert('Enter a number'); return; }
+
+    const from = document.getElementById('tempFrom').value;
+    const to = document.getElementById('tempTo').value;
+
+    let c;
+    if (from === 'c') c = v;
+    if (from === 'f') c = (v - 32) * 5/9;
+    if (from === 'k') c = v - 273.15;
+
+    let out;
+    if (to === 'c') out = c;
+    if (to === 'f') out = (c * 9/5) + 32;
+    if (to === 'k') out = c + 273.15;
+
+    document.getElementById('tempResult').innerText =
+      `${v} ${from.toUpperCase()} = ${out.toFixed(2)} ${to.toUpperCase()}`;
+  }
+</script>
+
+</body>
+</html>

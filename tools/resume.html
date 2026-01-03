@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Professional Resume Builder</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#f3f4f6;
+  padding:20px;
+}
+select,input,textarea{
+  width:100%;
+  margin-bottom:8px;
+  padding:6px;
+}
+button{
+  padding:8px 14px;
+  background:#111;
+  color:#fff;
+  border:none;
+  cursor:pointer;
+}
+.container{
+  display:flex;
+  gap:20px;
+}
+.form{
+  width:35%;
+  background:#fff;
+  padding:15px;
+}
+.resume{
+  width:794px;
+  background:#fff;
+  padding:30px;
+}
+h1,h2,h3{margin-bottom:6px}
+.section{margin-top:15px}
+.photo{
+  width:120px;
+  height:120px;
+  object-fit:cover;
+  display:none;
+}
+.creative{
+  display:none;
+}
+.row{
+  display:flex;
+  gap:20px;
+}
+.col-left{width:65%}
+.col-right{width:35%}
+.small{font-size:13px;color:#555}
+</style>
+</head>
+
+<body>
+
+<h2>Professional Resume Builder</h2>
+
+<div class="container">
+
+<!-- FORM -->
+<div class="form">
+<h3>Resume Type</h3>
+<select id="type" onchange="switchType()">
+  <option value="ats">ATS Friendly (No Photo)</option>
+  <option value="creative">Creative Resume (Photo Optional)</option>
+</select>
+
+<h3>Basic Info</h3>
+<input id="name" placeholder="Full Name">
+<input id="title" placeholder="Professional Title">
+<input id="location" placeholder="City, Country">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Phone">
+<input id="linkedin" placeholder="LinkedIn / Portfolio">
+
+<h3>Summary</h3>
+<textarea id="summary"></textarea>
+
+<h3>Skills (comma separated)</h3>
+<textarea id="skills"></textarea>
+
+<h3>Experience</h3>
+<textarea id="experience"
+placeholder="Job Title – Company (Year)\n• Achievement\n• Achievement"></textarea>
+
+<h3>Education</h3>
+<textarea id="education"></textarea>
+
+<h3>Projects</h3>
+<textarea id="projects"></textarea>
+
+<h3>Certifications</h3>
+<textarea id="certs"></textarea>
+
+<h3>Photo (Creative only)</h3>
+<input type="file" id="photo">
+
+<button onclick="updateResume()">Update</button>
+<button onclick="downloadPDF()">Download PDF</button>
+</div>
+
+<!-- ATS RESUME -->
+<div id="ats" class="resume">
+<h1 id="rName"></h1>
+<p class="small" id="rTitle"></p>
+<p class="small" id="rContact"></p>
+
+<div class="section">
+<h3>Professional Summary</h3>
+<p id="rSummary"></p>
+</div>
+
+<div class="section">
+<h3>Core Skills</h3>
+<p id="rSkills"></p>
+</div>
+
+<div class="section">
+<h3>Work Experience</h3>
+<pre id="rExperience"></pre>
+</div>
+
+<div class="section">
+<h3>Education</h3>
+<pre id="rEducation"></pre>
+</div>
+
+<div class="section">
+<h3>Projects</h3>
+<pre id="rProjects"></pre>
+</div>
+
+<div class="section">
+<h3>Certifications</h3>
+<pre id="rCerts"></pre>
+</div>
+</div>
+
+<!-- CREATIVE RESUME -->
+<div id="creative" class="resume creative">
+<div class="row">
+<div class="col-left">
+<h1 id="cName"></h1>
+<p id="cTitle"></p>
+<p class="small" id="cContact"></p>
+</div>
+<div class="col-right">
+<img id="cPhoto" class="photo">
+</div>
+</div>
+
+<div class="section">
+<h3>Profile</h3>
+<p id="cSummary"></p>
+</div>
+
+<div class="section">
+<h3>Skills</h3>
+<p id="cSkills"></p>
+</div>
+
+<div class="section">
+<h3>Experience</h3>
+<pre id="cExperience"></pre>
+</div>
+
+<div class="section">
+<h3>Education</h3>
+<pre id="cEducation"></pre>
+</div>
+
+<div class="section">
+<h3>Projects</h3>
+<pre id="cProjects"></pre>
+</div>
+
+<div class="section">
+<h3>Certifications</h3>
+<pre id="cCerts"></pre>
+</div>
+</div>
+
+</div>
+
+<script>
+function switchType(){
+  ats.style.display = type.value==='ats'?'block':'none'
+  creative.style.display = type.value==='creative'?'block':'none'
+}
+
+function updateResume(){
+  rName.innerText=cName.innerText=name.value
+  rTitle.innerText=cTitle.innerText=title.value
+  rContact.innerText=cContact.innerText=
+    location.value+' | '+email.value+' | '+phone.value+' | '+linkedin.value
+
+  rSummary.innerText=cSummary.innerText=summary.value
+  rSkills.innerText=cSkills.innerText=skills.value
+  rExperience.innerText=cExperience.innerText=experience.value
+  rEducation.innerText=cEducation.innerText=education.value
+  rProjects.innerText=cProjects.innerText=projects.value
+  rCerts.innerText=cCerts.innerText=certs.value
+}
+
+photo.onchange=e=>{
+  const f=e.target.files[0]
+  if(!f)return
+  const r=new FileReader()
+  r.onload=()=>{
+    cPhoto.src=r.result
+    cPhoto.style.display='block'
+  }
+  r.readAsDataURL(f)
+}
+
+function downloadPDF(){
+  const {jsPDF}=window.jspdf
+  const doc=new jsPDF()
+  const target=type.value==='ats'?ats:creative
+  doc.html(target,{
+    callback:()=>doc.save('resume.pdf'),
+    x:10,y:10
+  })
+}
+</script>
+
+</body>
+</html>

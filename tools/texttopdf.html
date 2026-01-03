@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Text to PDF | ToolifyHub</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    body{ background:#f3f4f6 }
+    .container{ max-width:800px; margin:50px auto; background:#fff; padding:28px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08) }
+    textarea{ width:100%; min-height:300px; padding:12px; border-radius:8px; border:1px solid #d1d5db; resize:vertical }
+    button{ background:#3b82f6;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;margin-top:12px }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="color:#3b82f6;text-align:center">Text to PDF</h2>
+    <p>Paste your text and click Download to save as a clean PDF.</p>
+    <textarea id="textContent" placeholder="Write or paste text here..."></textarea>
+    <div style="text-align:center">
+      <button onclick="downloadPDF()">Download PDF</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script>
+    function downloadPDF(){
+      const text = document.getElementById('textContent').value.trim();
+      if(!text){ alert('Please write some text'); return; }
+      const el = document.createElement('div');
+      el.style.fontFamily = "Poppins, sans-serif";
+      el.style.padding = "20px";
+      el.innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; font-size:12px; line-height:1.5">${text}</pre>`;
+      const opt = {
+        margin: 0.5,
+        filename: 'text.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(el).save();
+    }
+  </script>
+</body>
+</html>

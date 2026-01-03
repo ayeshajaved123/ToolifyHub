@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>QR Generator | ToolifyHub</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    body { background:#f3f4f6; }
+    .container{ max-width:720px; margin:50px auto; background:#fff; padding:28px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.08);}
+    h2{ color:#3b82f6; text-align:center; margin-bottom:18px;}
+    input{ width:100%; padding:12px; border-radius:8px; border:1px solid #d1d5db; margin-bottom:12px; }
+    button{ background:#3b82f6;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer}
+    #qrcode{ text-align:center; margin-top:18px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>QR Code Generator</h2>
+    <p>Enter a URL or text, then click Generate. Right-click the image to save.</p>
+    <input id="qrText" placeholder="https://example.com or any text..." />
+    <select id="sizeSelect" style="margin-bottom:12px;padding:8px;border-radius:6px;">
+      <option value="128">Size: 128px</option>
+      <option value="256" selected>Size: 256px</option>
+      <option value="512">Size: 512px</option>
+    </select>
+    <div style="display:flex;gap:10px;">
+      <button onclick="generateQR()">Generate QR</button>
+      <button onclick="clearQR()" style="background:#ef4444">Clear</button>
+    </div>
+    <div id="qrcode"></div>
+  </div>
+
+  <!-- QRCode library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    let qr;
+    function generateQR(){
+      const text = document.getElementById('qrText').value.trim();
+      if(!text){ alert('Enter text or URL'); return; }
+      const size = parseInt(document.getElementById('sizeSelect').value,10);
+      const container = document.getElementById('qrcode');
+      container.innerHTML = '';
+      qr = new QRCode(container, { text, width: size, height: size, colorDark: "#111827", colorLight:"#ffffff" });
+    }
+    function clearQR(){
+      document.getElementById('qrText').value = '';
+      document.getElementById('qrcode').innerHTML = '';
+    }
+  </script>
+</body>
+</html>
