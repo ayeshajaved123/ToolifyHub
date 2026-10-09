@@ -1,20 +1,20 @@
 # ToolifyHub
 
-ToolifyHub is a web-based multi-tool platform developed using HTML, CSS, and JavaScript.
+Web-based multi-tool platform — handy everyday tools in one clean, fast website.
 
 ## Features
 - Resume Builder
 - Unit Converter
 - Word Counter
 - QR Code Generator
-- Plagirism Checker
+- Plagiarism Checker
 - File Converter
 
-## Technologies Used
-- HTML5
-- CSS3
-- JavaScript
-- XAMPP (Local Server)
+## Tech Stack
+HTML · CSS · JavaScript
+
+## Run
+Open `index.html` in any browser.
 
 ## Author
-Ayesha Javed
+Ayesha Javed — BS Information Technology, Rawalpindi Women University
